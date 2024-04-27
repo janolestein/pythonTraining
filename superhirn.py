@@ -25,11 +25,16 @@ def makePseudoRandomGuess():
 
 def removeImpossibleGuesses(guess):
     global allSolutions
-    correctPositionsOfGuess, correctColorsOfGuess = determineCorrectPicks(guess, secretPick)
+    correctPositionsOfGuess, correctColorsOfGuess = determineCorrectPicks(
+        guess, secretPick
+    )
     tempAllSolutions = allSolutions.copy()
     for elem in tempAllSolutions:
         correctPositionsOfElem, correctColorsOfElem = determineCorrectPicks(elem, guess)
-        if correctPositionsOfGuess != correctPositionsOfElem or correctColorsOfGuess != correctColorsOfElem:
+        if (
+            correctPositionsOfGuess != correctPositionsOfElem
+            or correctColorsOfGuess != correctColorsOfElem
+        ):
             allSolutions.remove(elem)
     print("Size of Set: " + str(len(allSolutions)))
 
@@ -52,7 +57,6 @@ def determineCorrectPicks(actualPick, pickToCheckAgainst):
             incorecctAnswers.remove(elem)
             correctColor += 1
 
-
     return correctPositions, correctColor
 
 
@@ -74,10 +78,10 @@ def selectSecretPick():
 
     global gameState
     gameState += (
-            "\n###########################\n"
-            + "Secret Pick:\n"
-            + str(secretPick)
-            + "\n##########################\n"
+        "\n###########################\n"
+        + "Secret Pick:\n"
+        + str(secretPick)
+        + "\n##########################\n"
     )
 
 
@@ -91,7 +95,9 @@ def gameLoop(letCpuPlay):
             inputList = makePseudoRandomGuess()
             removeImpossibleGuesses(inputList)
         else:
-            userInput = input("Please make a guess (five numbers, seperated with a comma):")
+            userInput = input(
+                "Please make a guess (five numbers, seperated with a comma):"
+            )
             # TODO: validate input
             inputList = list(map(int, userInput.split(",")))
             if len(inputList) != 5:
@@ -102,11 +108,15 @@ def gameLoop(letCpuPlay):
             break
 
         gameState += (
-                "\n###########################\n"
-                + str(inputList)
-                + "\nYou have " + str(correctPositions) + " correct Guesses\n"
-                + "and you have " + str(correctColor) + " correct Color(s)"
-                + "\n##########################\n"
+            "\n###########################\n"
+            + str(inputList)
+            + "\nYou have "
+            + str(correctPositions)
+            + " correct Guesses\n"
+            + "and you have "
+            + str(correctColor)
+            + " correct Color(s)"
+            + "\n##########################\n"
         )
         drawGameState()
         gameIsOver += 1
